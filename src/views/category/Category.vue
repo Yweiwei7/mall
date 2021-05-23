@@ -1,6 +1,11 @@
 <template>
-  <div class="wrapper" ref="aaaa">
+  <div class="wrapper" ref="wrapper">
+    <!-- 1. 无论是否设置click:truebutton都可以点击 -->
+    <!-- <button @click="btnClick">按钮</button> -->
+    <!-- 2. 必须设置click:true，那么div才能监听点击 -->
+    <!-- <div @click="divClick">呵呵呵呵</div> -->
     <ul class="content">
+      <button @click="btnClick">按钮</button>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>
@@ -116,15 +121,31 @@ export default {
     };
   },
   // 组件创建完后调用
-  created() {
-    // console.log(this.refs.aaaa);
-    // console.log(document.querySelector(".wrapper"));
-    // this.scroll = new BScroll(null / undefine, {
-    // });
-  },
+  // created() {
+  //   // console.log(this.refs.aaaa);
+  //   // console.log(document.querySelector(".wrapper"));
+  //   // this.scroll = new BScroll(null / undefine, {
+  //   // });
+  // },
   mounted() {
     // new BScroll(".wrapper", {});
-    this.scroll = new BScroll(this.$refs.aaaa, {});
+    this.scroll = new BScroll(this.$refs.wrapper, {
+      probeType: 3,
+      pullUpLoad: true,
+      click: true, // 表单属性无需设置
+    });
+
+    // this.scroll.on("scroll", (position) => console.log(position));
+
+    this.scroll.on("pullingUp", () => console.log("上拉加载更多"));
+  },
+  methods: {
+    btnClick() {
+      console.log("btnClick");
+    },
+    divClick() {
+      console.log("divClick");
+    },
   },
 };
 </script>
