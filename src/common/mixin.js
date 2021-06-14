@@ -1,5 +1,5 @@
-import BackTop from 'components/content/backTop/BackTop'
 import { debounce } from "./utils";
+import BackTop from 'components/content/backTop/BackTop'
 
 //监听项目图片加载
 export const itemListenerMixin = {
@@ -34,10 +34,10 @@ export const backTopMixin = {
   methods: {
     // 1.判断BackTop是否显示
     BackTop(position) {
-      this.isShowBackTop = (-position.y) > 800
+      this.isShowBackTop = (-position.y) > 1000
     },
-    //回到顶部
-    backTopClick() {
+    // 2.回到顶部
+    backClick() {
       //this.$refs.scroll访问scroll组件，然后调用scrollTo方法
       this.$refs.scroll.scrollTo(0, 0, 300)
     },
