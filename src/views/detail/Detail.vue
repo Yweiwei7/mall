@@ -25,6 +25,7 @@
     </scroll>
     <detail-bottom-bar @addCart="addToCart" />
     <back-top @click.native="backClick" v-show="isShowBackTop" />
+    <!-- <toast :message="message" :show="show" /> -->
   </div>
 </template>
 
@@ -40,6 +41,7 @@ import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/goods/GoodsList";
+// import Toast from "components/common/toast/Toast";
 import { debounce } from "common/utils";
 
 import {
@@ -50,6 +52,8 @@ import {
   getRecommend,
 } from "network/detail";
 import { itemListenerMixin, backTopMixin } from "common/mixin";
+
+import { mapActions } from "vuex";
 
 export default {
   name: "Detail",
@@ -64,6 +68,7 @@ export default {
     DetailCommentInfo,
     GoodsList,
     DetailBottomBar,
+    // Toast,
   },
   mixins: [itemListenerMixin, backTopMixin],
   data() {
@@ -79,6 +84,8 @@ export default {
       themeTopYs: [],
       getThemeTopY: null,
       currentIndex: 0,
+      // message: "",
+      // show: false,
     };
   },
   created() {
@@ -163,6 +170,7 @@ export default {
   mounted() {},
   updated() {},
   methods: {
+    ...mapActions(["addCart"]),
     // 监听详情的图片的加载完成
     detailImageLoad() {
       // this.refresh(); // 用防抖时的方案，而不是判断是否最后一张图片加载完
@@ -216,10 +224,25 @@ export default {
       product.price = this.goods.realPrice;
       product.iid = this.iid;
 
-      // 2. 将商品添加到购物车里
+      // 2. 将商品添加到购物车里(1.Promise 2.mapActions)
       // this.$store.cartList.push(product)
       // this.$store.commit("addCart", product);
-      this.$store.dispatch("addCart", product);
+      this.addCart(product).then((res) => {
+        // this.show = true;
+        // this.message = res;
+        // setTimeout(() => {
+        //   this.show = false;
+        //   this.message = "";
+        // }, 1500);
+
+        // this.$toast.show();
+        this.$toast.show(res, 2000);
+      });
+      // this.$store.dispatch("addCart", product).then((res) => {
+      //   console.log(res);
+      // });
+
+      // 3. 添加到购物车成功
     },
   },
 };
