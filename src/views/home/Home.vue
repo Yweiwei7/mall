@@ -109,19 +109,19 @@ export default {
      * 事件监听相关方法
      */
     tabClick(index) {
-      // switch (index) {
-      //   case 0:
-      //     this.currentType = "pop";
-      //     break;
-      //   case 1:
-      //     this.currentType = "new";
-      //     break;
-      //   case 2:
-      //     this.currentType = "sell";
-      //     break;
-      // }
+      switch (index) {
+        case 0:
+          this.currentType = "pop";
+          break;
+        case 1:
+          this.currentType = "new";
+          break;
+        case 2:
+          this.currentType = "sell";
+          break;
+      }
       // Object.keys()方法会返回一个给定对象的自身可枚举属性组成的数组
-      this.currentType = Object.keys(this.goods)[index];
+      // this.currentType = Object.keys(this.goods)[index];
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
